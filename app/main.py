@@ -1,10 +1,23 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import pandas as pd
 
+
 # 1️⃣ Create FastAPI instance
 app = FastAPI(title="Malaria Prediction API")
+origins = [
+    "https://kwaw-ebn.github.io"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # allow your frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 2️⃣ Load trained model
 model = joblib.load("malaria_model.pkl")
